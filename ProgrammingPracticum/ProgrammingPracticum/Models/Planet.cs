@@ -23,6 +23,11 @@ namespace ProgrammingPracticum.Models
             sb.AppendLine($"Support life: {(this.IsHabitable ? "yes" : "no")}");
             sb.AppendLine("Moons:");
 
+            if (this.Children.Count == 0)
+            {
+                sb.AppendLine("none");
+            }
+
             foreach (var moon in this.Children)
             {
                 sb.AppendLine(moon.ToString());

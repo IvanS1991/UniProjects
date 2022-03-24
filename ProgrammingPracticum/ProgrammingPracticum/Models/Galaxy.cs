@@ -24,6 +24,11 @@ namespace ProgrammingPracticum.Models
             sb.AppendLine($"Age: {this.Age}");
             sb.AppendLine($"Stars:");
 
+            if (this.Children.Count == 0)
+            {
+                sb.AppendLine("none");
+            }
+
             foreach (var star in this.Children)
             {
                 sb.AppendLine(star.ToString());
