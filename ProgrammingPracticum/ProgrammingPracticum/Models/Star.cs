@@ -30,21 +30,13 @@ namespace ProgrammingPracticum.Models
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine($"- Name: {this.Name}");
+            sb.AppendLine($"Name: {this.Name}");
             sb.AppendLine($"Class: {this.Class} ({this.Mass:f2}, {this.Radius:f2}, {this.Temperature}, {this.Luminosity:f2})");
-            sb.AppendLine("Planets:");
+            sb.AppendLine($"Planets:");
 
-            if (this.Children.Count == 0)
-            {
-                sb.AppendLine("none");
-            }
+            sb.AppendLine(this.DisplayChildren('o'));
 
-            foreach (var planet in this.Children)
-            {
-                sb.AppendLine(planet.ToString());
-            }
-
-            return sb.ToString().Trim();
+            return sb.ToString().TrimEnd();
         }
 
         private StarClass? DetermineStarClass()

@@ -17,18 +17,13 @@ namespace ProgrammingPracticum.Data
 
         public string GetStats()
         {
-            var galaxies = this.dataContext.Galaxies;
-            var stars = this.dataContext.GetChildren(galaxies);
-            var planets = this.dataContext.GetChildren(stars);
-            var moons = this.dataContext.GetChildren(planets);
-
             var sb = new StringBuilder();
 
             sb.AppendLine("--- Stats ---");
-            sb.AppendLine($"Galaxies: {galaxies.Count}");
-            sb.AppendLine($"Stars: {stars.Count}");
-            sb.AppendLine($"Planets: {planets.Count}");
-            sb.AppendLine($"Moons: {moons.Count}");
+            sb.AppendLine($"Galaxies: {this.dataContext.Galaxies.Count}");
+            sb.AppendLine($"Stars: {this.dataContext.Stars.Count}");
+            sb.AppendLine($"Planets: {this.dataContext.Planets.Count}");
+            sb.AppendLine($"Moons: {this.dataContext.Moons.Count}");
             sb.AppendLine("--- End of stats ---");
 
             return sb.ToString().Trim();
@@ -41,36 +36,31 @@ namespace ProgrammingPracticum.Data
 
             var entities = match.Groups[1].Value;
 
-            var galaxies = this.dataContext.Galaxies;
-            var stars = this.dataContext.GetChildren(galaxies);
-            var planets = this.dataContext.GetChildren(stars);
-            var moons = this.dataContext.GetChildren(planets);
-
             var sb = new StringBuilder();
 
             sb.AppendLine($"--- List of all researched {entities} ---");
 
             if (entities == "galaxies")
             {
-                var galaxiesString = string.Join("\n", galaxies.Select(x => x.Name));
+                var galaxiesString = string.Join("\n", this.dataContext.Galaxies.Select(x => x.Name));
                 sb.AppendLine(galaxiesString);
             }
 
             if (entities == "stars")
             {
-                var starsString = string.Join("\n", stars.Select(x => x.Name));
+                var starsString = string.Join("\n", this.dataContext.Stars.Select(x => x.Name));
                 sb.AppendLine(starsString);
             }
 
             if (entities == "planets")
             {
-                var planetsString = string.Join("\n", planets.Select(x => x.Name));
+                var planetsString = string.Join("\n", this.dataContext.Planets.Select(x => x.Name));
                 sb.AppendLine(planetsString);
             }
 
             if (entities == "moons")
             {
-                var moonsString = string.Join("\n", moons.Select(x => x.Name));
+                var moonsString = string.Join("\n", this.dataContext.Moons.Select(x => x.Name));
                 sb.AppendLine(moonsString);
             }
 

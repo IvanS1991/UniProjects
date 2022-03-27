@@ -9,5 +9,7 @@ namespace ProgrammingPracticum.Models.Contracts
         void AddChild(TChild child);
 
         TChild GetChild(string name);
+
+        string DisplayChildren(char bulletStyle);
     }
 }

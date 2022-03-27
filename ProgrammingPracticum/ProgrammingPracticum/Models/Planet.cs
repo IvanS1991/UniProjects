@@ -18,22 +18,14 @@ namespace ProgrammingPracticum.Models
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine($"o Name: {this.Name}");
+            sb.AppendLine($"Name: {this.Name}");
             sb.AppendLine($"Type: {this.Type}");
             sb.AppendLine($"Support life: {(this.IsHabitable ? "yes" : "no")}");
-            sb.AppendLine("Moons:");
+            sb.AppendLine($"Moons:");
 
-            if (this.Children.Count == 0)
-            {
-                sb.AppendLine("none");
-            }
+            sb.AppendLine(this.DisplayChildren('*'));
 
-            foreach (var moon in this.Children)
-            {
-                sb.AppendLine(moon.ToString());
-            }
-
-            return sb.ToString().Trim();
+            return sb.ToString().TrimEnd();
         }
     }
 }

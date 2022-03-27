@@ -30,6 +30,12 @@ namespace ProgrammingPracticum.Data
 
         public IReadOnlyCollection<Galaxy> Galaxies => this.galaxies.Values;
 
+        public IReadOnlyCollection<Star> Stars => this.GetChildren(this.Galaxies);
+
+        public IReadOnlyCollection<Planet> Planets => this.GetChildren(this.Stars);
+
+        public IReadOnlyCollection<Moon> Moons => this.GetChildren(this.Planets);
+
         public string AddStar(string command)
         {
             var regex = new Regex($"^{ADD_STAR} \\[([^]]+)\\] \\[([^]]+)\\] ([0-9.]+) ([0-9.]+) ([0-9]+) ([0-9.]+)$");
@@ -62,8 +68,7 @@ namespace ProgrammingPracticum.Data
             var planetType = match.Groups[3].Value;
             var supportLife = match.Groups[4].Value;
 
-            var stars = this.GetChildren(this.galaxies.Values);
-            var star = stars.FirstOrDefault(x => x.Name == starName);
+            var star = this.Stars.FirstOrDefault(x => x.Name == starName);
 
             if (star != null)
             {
@@ -84,9 +89,7 @@ namespace ProgrammingPracticum.Data
             var moonName = match.Groups[2].Value;
             var supportLife = match.Groups[4].Value;
 
-            var stars = this.GetChildren(this.galaxies.Values);
-            var planets = this.GetChildren(stars);
-            var planet = planets.FirstOrDefault(x => x.Name == planetName);
+            var planet = this.Planets.FirstOrDefault(x => x.Name == planetName);
 
             if (planet != null)
             {
@@ -98,7 +101,7 @@ namespace ProgrammingPracticum.Data
             return null;
         }
 
-        public IReadOnlyCollection<TChild> GetChildren<TChild>(IReadOnlyCollection<IParent<TChild>> parents)
+        private IReadOnlyCollection<TChild> GetChildren<TChild>(IReadOnlyCollection<IParent<TChild>> parents)
             where TChild : ICellestialBody
         {
             return parents.Aggregate(new List<TChild>(), (acc, parent) =>

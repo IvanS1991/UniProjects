@@ -1,5 +1,4 @@
 ﻿using ProgrammingPracticum.Models;
-using ProgrammingPracticum.Models.Contracts;
 using System.Collections.Generic;
 
 namespace ProgrammingPracticum.Data
@@ -7,6 +6,9 @@ namespace ProgrammingPracticum.Data
     internal interface IDataContext
     {
         IReadOnlyCollection<Galaxy> Galaxies { get; }
+        IReadOnlyCollection<Star> Stars { get; }
+        IReadOnlyCollection<Planet> Planets { get; }
+        IReadOnlyCollection<Moon> Moons { get; }
 
         string AddGalaxy(string command);
 
@@ -15,8 +17,5 @@ namespace ProgrammingPracticum.Data
         string AddPlanet(string command);
 
         string AddMoon(string command);
-
-        IReadOnlyCollection<TChild> GetChildren<TChild>(IReadOnlyCollection<IParent<TChild>> parents)
-            where TChild : ICellestialBody;
     }
 }

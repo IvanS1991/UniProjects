@@ -1,5 +1,7 @@
 ﻿using ProgrammingPracticum.Data;
 using ProgrammingPracticum.IO;
+using System;
+using System.Text;
 using System.Threading;
 
 namespace ProgrammingPracticum
@@ -13,8 +15,9 @@ namespace ProgrammingPracticum
 
         private static Application Setup()
         {
-            // Set invariant culture to handle decimal dot/comma
+            // Set culture/encoding
             Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            Console.OutputEncoding = Encoding.UTF8;
 
             // Dependencies
             var reader = new ConsoleReader();
