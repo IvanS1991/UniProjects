@@ -21,6 +21,11 @@ namespace ProgrammingPracticum.Models
 
         public void AddChild(TChild child)
         {
+            if (!child.IsValid())
+            {
+                return;
+            }
+
             this.children.Add(child.Name, child);
         }
 
@@ -51,6 +56,11 @@ namespace ProgrammingPracticum.Models
             }
 
             return $"  {bulletStyle}  {sb.ToString().TrimEnd()}";
+        }
+
+        public virtual bool IsValid()
+        {
+            return true;
         }
     }
 }

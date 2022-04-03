@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using ProgrammingPracticum.Constants;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace ProgrammingPracticum.Models
 {
@@ -29,6 +32,19 @@ namespace ProgrammingPracticum.Models
             sb.AppendLine($"--- End of data for {this.Name} galaxy ---");
 
             return sb.ToString().TrimEnd();
+        }
+
+        public override bool IsValid()
+        {
+            var validGalaxyTypes = new string[]
+            {
+                "elliptical",
+                "lenticular",
+                "spiral",
+                "irregular"
+            };
+
+            return validGalaxyTypes.Any(x => x == this.Type);
         }
     }
 }

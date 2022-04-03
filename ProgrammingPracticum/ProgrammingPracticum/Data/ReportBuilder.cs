@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using ProgrammingPracticum.Models.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -40,30 +43,23 @@ namespace ProgrammingPracticum.Data
 
             sb.AppendLine($"--- List of all researched {entities} ---");
 
+            IReadOnlyCollection<ICellestialBody> cellestialBodies = null;
+
             if (entities == "galaxies")
             {
-                var galaxiesString = string.Join("\n", this.dataContext.Galaxies.Select(x => x.Name));
-                sb.AppendLine(galaxiesString);
-            }
-
-            if (entities == "stars")
+                cellestialBodies = this.dataContext.Galaxies;
+            } else if (entities == "stars")
             {
-                var starsString = string.Join("\n", this.dataContext.Stars.Select(x => x.Name));
-                sb.AppendLine(starsString);
-            }
-
-            if (entities == "planets")
+                cellestialBodies = this.dataContext.Stars;
+            } else if (entities == "planets")
             {
-                var planetsString = string.Join("\n", this.dataContext.Planets.Select(x => x.Name));
-                sb.AppendLine(planetsString);
-            }
-
-            if (entities == "moons")
+                cellestialBodies = this.dataContext.Planets;
+            } else if (entities == "moons")
             {
-                var moonsString = string.Join("\n", this.dataContext.Moons.Select(x => x.Name));
-                sb.AppendLine(moonsString);
+                cellestialBodies = this.dataContext.Moons;
             }
 
+            sb.AppendLine(this.StringifyList(cellestialBodies, x => x.Name));
             sb.AppendLine($"--- End of {entities} list ---");
 
             return sb.ToString().Trim();
@@ -83,6 +79,16 @@ namespace ProgrammingPracticum.Data
             }
 
             return null;
+        }
+
+        private string StringifyList(IReadOnlyCollection<ICellestialBody> cellestialBodies, Func<ICellestialBody, string> mapperFn)
+        {
+            if (cellestialBodies.Count == 0)
+            {
+                return "none";
+            }
+
+            return string.Join("\n", cellestialBodies.Select(mapperFn));
         }
     }
 }

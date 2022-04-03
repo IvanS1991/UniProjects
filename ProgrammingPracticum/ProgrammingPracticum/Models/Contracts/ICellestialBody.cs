@@ -3,5 +3,7 @@
     internal interface ICellestialBody
     {
         string Name { get; }
+
+        bool IsValid();
     }
 }

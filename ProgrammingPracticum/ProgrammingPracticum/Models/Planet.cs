@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using ProgrammingPracticum.Constants;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace ProgrammingPracticum.Models
 {
@@ -26,6 +29,24 @@ namespace ProgrammingPracticum.Models
             sb.AppendLine(this.DisplayChildren('*'));
 
             return sb.ToString().TrimEnd();
+        }
+
+        public override bool IsValid()
+        {
+            var validPlanetTypes = new string[]
+            {
+                "terrestrial",
+                "giant planet",
+                "ice giant",
+                "mesoplanet",
+                "mini-neptune",
+                "planetar",
+                "super-earth",
+                "super-jupiter",
+                "sub-earth",
+            };
+
+            return validPlanetTypes.Any(x => x == this.Type);
         }
     }
 }

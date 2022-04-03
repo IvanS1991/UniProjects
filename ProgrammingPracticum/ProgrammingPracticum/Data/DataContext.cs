@@ -12,6 +12,14 @@ namespace ProgrammingPracticum.Data
     {
         private readonly Dictionary<string, Galaxy> galaxies = new Dictionary<string, Galaxy>();
 
+        public IReadOnlyCollection<Galaxy> Galaxies => this.galaxies.Values;
+
+        public IReadOnlyCollection<Star> Stars => this.GetChildren(this.Galaxies);
+
+        public IReadOnlyCollection<Planet> Planets => this.GetChildren(this.Stars);
+
+        public IReadOnlyCollection<Moon> Moons => this.GetChildren(this.Planets);
+
         public string AddGalaxy(string command)
         {
             var regex = new Regex($"^{ADD_GALAXY} \\[([^]]+)\\] (\\w+) (.+)$");
@@ -23,18 +31,13 @@ namespace ProgrammingPracticum.Data
 
             var galaxy = new Galaxy(name, type, age);
 
-            this.galaxies.Add(name, galaxy);
+            if (galaxy.IsValid())
+            {
+                this.galaxies.Add(name, galaxy);
+            }
 
             return null;
         }
-
-        public IReadOnlyCollection<Galaxy> Galaxies => this.galaxies.Values;
-
-        public IReadOnlyCollection<Star> Stars => this.GetChildren(this.Galaxies);
-
-        public IReadOnlyCollection<Planet> Planets => this.GetChildren(this.Stars);
-
-        public IReadOnlyCollection<Moon> Moons => this.GetChildren(this.Planets);
 
         public string AddStar(string command)
         {
